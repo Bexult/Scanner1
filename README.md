@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<KOKZHAL logistics>
 <html lang="ru">
 <head><meta charset="UTF-8"/><title>Сканер онлайн</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -61,8 +61,9 @@ document.addEventListener('keydown', e=>{
 
 function process(code){
   if (!code) return;
-  const dup = scanned.find(x=>x['Трек-код']===code);
-  const found = expected.find(x=>x.code===code);
+ code = code.trim().toLowerCase();
+const dup = scanned.find(x=>x['Трек-код'].toLowerCase() === code);
+const found = expected.find(x=>x.code.toLowerCase() === code);
   let state, cl='ok';
   if (dup) { state='🔁 Дубликат'; cl='dup'; soundError.play(); }
   else if (!found) { state='❌ Не найден'; cl='error'; soundError.play(); }
