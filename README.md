@@ -1,4 +1,4 @@
-<KOKZHAL logistics>
+<KOKZHAL_logistics>
 <html lang="ru">
 <head><meta charset="UTF-8"/><title>Сканер онлайн</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -34,7 +34,13 @@ fileInput.onchange = e => {
   reader.onload = ev => {
     const wb = XLSX.read(new Uint8Array(ev.target.result), {type:'array'});
     const sh = wb.Sheets[wb.SheetNames[0]];
-    const data = XLSX.utils.sheet_to_json(sh, {header:1}).slice(1);
+    const data = XLSX.utils.sheet_to_json(sh, {defval: "", raw: false});
+expected = data.map(r => ({
+  code: (r["Трек-код"] || "").toString().trim(),
+  client: r["Клиент"] || "—",
+  address: r["Адрес"] || "—"
+}));
+
     expected = data.map(r=>({
       code:r[0]?.toString().trim(),
       client:r[1]?.toString().trim()||'—',
